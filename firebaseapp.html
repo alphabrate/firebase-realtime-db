@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        input {
+            height: 50px;
+            width: 100px;
+            margin-top: 15px;
+            font-size: 30px;
+            outline: none;
+            border: 1px solid black !important;
+            transition: 0.5s;
+            margin-left: 40%;
+        }
+        
+        input:focus {
+            width: 250px;
+        }
+        
+        input:hover {
+            width: 250px;
+        }
+        
+        button {
+            height: 50px;
+            width: 50px;
+            margin-top: 15px;
+            font-size: 30px;
+            outline: none;
+            border: 1px solid black !important;
+            transition: 0.5s;
+            margin-left: 40%;
+            background: transparent !important;
+            border-radius: 50%;
+        }
+        
+        #get {
+            margin-left: 5%;
+        }
+        
+        * {
+            user-select: none;
+        }
+        
+        span {
+            transition: 1s;
+        }
+        
+        button:hover span {
+            transform: rotate(360deg);
+        }
+        
+        button:active span {
+            transition: 0.3s;
+            transform: translateX(5px);
+        }
+        
+        #text {
+            position: absolute;
+            resize: none;
+            height: 200px;
+            margin-top: -180px;
+            margin-left: 180px;
+            font-size: 30px;
+            outline: none;
+            border: 1px solid black !important;
+            transition: 0.5s;
+            background: transparent !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+    <from class="f"><br><br><br><br><br><br><br><br>
+        <input type="text" id="name" placeholder="Name" /><br>
+        <input type="number" id="year" placeholder="Year" /><br>
+        <input type="text" id="school" placeholder="School" /><br>
+        <button type="submit" id="submit"> <span class="material-icons-outlined"> send </span> </button>
+        <button type="submit" id="get"> <span class="material-icons-outlined"> search </span> </button>
+        <textarea id="text" readonly></textarea>
+    </from>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyC8DTGBJLKtyKGsBZWcl6ZFJgKFo3W7Vv4",
+          authDomain: "asgdihfklasd.firebaseapp.com",
+          databaseURL: "https://asgdihfklasd-default-rtdb.firebaseio.com",
+          projectId: "asgdihfklasd",
+          storageBucket: "asgdihfklasd.appspot.com",
+          messagingSenderId: "960239340844",
+          appId: "1:960239340844:web:50fafc177199449e9cf089",
+          databaseURL: "https://asgdihfklasd-default-rtdb.firebaseio.com/",
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase();
+
+        function setdata() {
+            const db = getDatabase();
+            set(ref(db, name.value), {
+              name: name.value,
+              school: school.value,
+              year : year.value
+            });
+          }
+        
+        function getdata(){
+            $.getJSON( "https://asgdihfklasd-default-rtdb.firebaseio.com/.json", function(data) {
+                console.log(data[name.value])
+                text.value = `Name: ${data[name.value]['name']}\nSchool: ${data[name.value]['school']}\nYear: ${data[name.value]['year']}`
+              
+        })}
+
+        const name = document.getElementById('name')
+        const school = document.getElementById('school')
+        const year = document.getElementById('year')
+        const submit = document.getElementById('submit')
+        const getd = document.getElementById('get')
+        const text = document.getElementById('text')
+        submit.addEventListener('click', setdata)
+        getd.addEventListener('click', getdata)
+
+      </script>
+
+</body>
+
+</html>
